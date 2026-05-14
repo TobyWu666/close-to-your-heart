@@ -14,6 +14,7 @@ const SCORE_PARTS = [
   ['sameHandOpenAngle', '單手張角'],
   ['otherFingersAway', '其他手指排除'],
 ]
+const HEART_VIDEO_SRC = `${import.meta.env.BASE_URL}heart.mov`
 const AGENT_PROMPT = `請幫我建立一個名為「貼近你的心」的互動網頁。
 
 核心概念：
@@ -26,7 +27,7 @@ const AGENT_PROMPT = `請幫我建立一個名為「貼近你的心」的互動�
 4. HandLandmarker 設定 numHands: 2，同時偵測兩隻手。
 5. 每幀使用 detectForVideo(video, performance.now()) 取得 landmarks。
 6. 使用 canvas 疊在 video 上，畫出手部骨架。
-7. 影片素材放在 public/heart.mov，使用 <video src="/heart.mov" loop playsinline>。
+7. 影片素材放在 public/heart.mov，使用 Vite 的 base path 載入，例如 \`\${import.meta.env.BASE_URL}heart.mov\`。
 
 愛心手勢判斷：
 MediaPipe 每隻手有 21 個 landmarks，主要使用：
@@ -95,7 +96,7 @@ document.querySelector('#app').innerHTML = `
       <div class="stage">
         <video id="camera" autoplay muted playsinline></video>
         <canvas id="overlay"></canvas>
-        <video id="funnyVideo" class="funny-video" src="/heart.mov" playsinline preload="auto" loop muted></video>
+        <video id="funnyVideo" class="funny-video" src="${HEART_VIDEO_SRC}" playsinline preload="auto" loop muted></video>
         <div class="confidence">
           <span>信心度</span>
           <strong id="scoreText">--%</strong>
